@@ -45,7 +45,6 @@ const sqlConfig = {
 export async function getConnection(){
   try {
       const pool = await new sql.ConnectionPool(sqlConfig)
-      console.log(pool)
       return pool.connect()
   } catch (err) {
       console.log(err)

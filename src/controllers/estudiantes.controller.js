@@ -33,12 +33,17 @@ export const getEstudiantes = async (req, res) => {
 export const postEstudiantes = async (req, res) => {
 
     try {
+        const {id, nombre, calificacion} = req.body
 
-        const { id, nombre, calificacion } = req.body;
+        const pool = await getConnection()
+        const result = await pool.request()
+        .input('id', id)
+        .input('nombre', nombre)
+        .input('calificacion', calificacion)
+        .query(queries.registrarEstudiante)
+        const resConsulta = result.rowsAffected[0]
 
-        const resConsulta = await consultar(queries.registrarEstudiante, [id, nombre, calificacion]);
-
-        if(resConsulta.affectedRows === 1){
+        if(resConsulta === 1){
             res.json('ok');
         }else{
             res.status(500).json('No fue posible registrar el estudiante');
@@ -46,6 +51,7 @@ export const postEstudiantes = async (req, res) => {
 
     } catch (error) {
         res.status(500).json('Error en la API')
+        console.log(error)
     }
 
 }
@@ -53,12 +59,14 @@ export const postEstudiantes = async (req, res) => {
 export const deleteEstudiantes = async (req, res) => {
 
     try {
-
         const { idEstudiante } = req.params;
 
-        const resConsulta = await consultar(queries.deleteEstudiante, [idEstudiante]);
+        
+        const pool = await getConnection()
+        const result = await pool.request().input('id', idEstudiante).query(queries.deleteEstudiante)
+        const resConsulta = result.rowsAffected[0]
 
-        if(resConsulta.affectedRows === 1){
+        if(resConsulta === 1){
             res.json('ok');
         }else{
             res.status(500).json('No fue posible eliminar el estudiante');
@@ -66,6 +74,7 @@ export const deleteEstudiantes = async (req, res) => {
 
     } catch (error) {
         res.status(500).json('Error en la API')
+        console.log(error)
     }
 
 }
@@ -76,9 +85,15 @@ export const updateEstudiantes = async (req, res) => {
 
         const { id, nombre, calificacion } = req.body;
 
-        const resConsulta = await consultar(queries.updateEstudiante, [nombre, calificacion, id]);
+        const pool = await getConnection()
+        const result = await pool.request()
+        .input('id', id)
+        .input('nombre',nombre)
+        .input('calificacion',calificacion)
+        .query(queries.updateEstudiante)
+        const resConsulta = result.rowsAffected[0]
 
-        if(resConsulta.affectedRows === 1){
+        if(resConsulta === 1){
             res.json('ok');
         }else{
             res.status(500).json('No fue posible eliminar el estudiante');
@@ -86,6 +101,7 @@ export const updateEstudiantes = async (req, res) => {
 
     } catch (error) {
         res.status(500).json('Error en la API')
+        console.log(error)
     }
 
 }
