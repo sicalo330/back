@@ -1,10 +1,11 @@
 import { Router } from 'express'
+import jwt from './../utils/jwt.js'
 
 import { getEstudiantes, postEstudiantes, deleteEstudiantes, updateEstudiantes } from '../controllers/estudiantes.controller'
 
 const router = Router()
 
-router.get('/Estudiantes/GetEstudiantes', getEstudiantes )
+router.get('/Estudiantes/GetEstudiantes',jwt.validateToken, getEstudiantes )
 
 router.post('/Estudiantes/PostEstudiante', postEstudiantes )
 
