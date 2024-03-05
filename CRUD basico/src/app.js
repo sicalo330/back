@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 // const cors = require('cors')
 import router from '../src/routes/estudiantes.route'
+import routerUsuario from './routes/usuario.route'
 
 const app = express()
 
@@ -14,5 +15,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 app.use(router)
+app.use(routerUsuario)
 
 export default app

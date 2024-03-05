@@ -1,17 +1,23 @@
 // import { consultar, queries } from "../database/index";
 import { getConnection, sql, queries } from '../database'
+const jwt = require('./../utils/jwt.js')
 
 
 export const getEstudiantes = async (req, res) => {
   
     try {
-
         // const resConsulta = await consultar(queries.getEstudiantes, []);
         const pool = await getConnection()
         const result = await pool.request().query(queries.getEstudiantes)
         const resConsulta = result.recordsets[0]
+        // const accessToken = jwt.generateAccesToken(resConsulta[0])
+        // res.header('authorization', accessToken).json({
+        //     message: 'Usuario Autenticado',
+        //     token: accessToken
+        // })
         res.json(resConsulta)
     } catch (error) {
+        console.log(error)
         res.status(500).json('Error en la API')
     }
 

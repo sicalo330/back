@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 
-exports.generateAccesToken = function (arg){
-    return jwt.sign(arg, process.env.TOKEN,{ expiresIn: '60m'})
+export function generateAccesToken (arg){
+    console.log(arg)
+    return jwt.sign(arg, process.env.TOKEN, {expiresIn: '60m'})
 }
 
 exports.validateToken = function(req,res,next){

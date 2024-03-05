@@ -5,7 +5,7 @@ import { getEstudiantes, postEstudiantes, deleteEstudiantes, updateEstudiantes }
 
 const router = Router()
 
-router.get('/Estudiantes/GetEstudiantes',jwt.validateToken, getEstudiantes )
+router.get('/Estudiantes/GetEstudiantes', getEstudiantes )
 
 router.post('/Estudiantes/PostEstudiante', postEstudiantes )
 
