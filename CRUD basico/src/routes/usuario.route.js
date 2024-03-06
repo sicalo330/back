@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { postUsuario } from "../controllers/usuario.controller";
+import { validarUsuario } from "../controllers/usuario.controller";
 
 const router = Router()
 
-router.post('usuario/postUsuario', postUsuario)
+router.post('/Usuario/postUsuario', validarUsuario)
 
 export default router

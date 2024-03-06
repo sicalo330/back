@@ -1,27 +1,30 @@
-import { getConnection, queries } from '../database'
+import { getConnection } from '../database';
+import { queriesUsuario } from '../database/queriesUsuario';
+const jwt = require('./../utils/jwt.js')
 
-export const postUsuario = async (req, res) => {
-
+export const validarUsuario = async (req, res) => {
     try {
-        const {id, nombre, calificacion} = req.body
+        const { correo, contraseña } = req.body;
 
-        const pool = await getConnection()
+        const pool = await getConnection();
         const result = await pool.request()
-        .input('id', id)
-        .input('nombre', nombre)
-        .input('calificacion', calificacion)
-        .query(queries.registrarEstudiante)
-        const resConsulta = result.rowsAffected[0]
+            .input('correo', correo)
+            .input('contraseña', contraseña)
+            .query(queriesUsuario.validarUsuario);
 
-        if(resConsulta === 1){
-            res.json('ok');
-        }else{
+        const resConsulta = result.rowsAffected[0];
+
+        if (resConsulta === 1) {
+            const token = jwt.generateAccesToken({correo})
+            res.json({
+                token: token
+            });
+        } else {
             res.status(500).json('No fue posible registrar el estudiante');
         }
-
     } catch (error) {
-        res.status(500).json('Error en la API')
-        console.log(error)
+        res.status(500).json('Error en la API');
+        console.log(error);
     }
+};
 
-}

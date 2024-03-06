@@ -47,7 +47,7 @@ export async function getConnection(){
       const pool = await new sql.ConnectionPool(sqlConfig)
       return pool.connect()
   } catch (err) {
-      console.log(err)
+      console.log('Error al conectar a la base de datos' + err)
   }
 }
 

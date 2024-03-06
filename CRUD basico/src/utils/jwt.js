@@ -7,7 +7,7 @@ export function generateAccesToken (arg){
 
 exports.validateToken = function(req,res,next){
     const accesToken = req.headers['authorization'].split(' ')[1] || req.query.accesToken
-    if(!accestoken) res.status(401).send('Acceso denegado')
+    if(!accesToken) res.status(401).send('Acceso denegado')
 
     jwt.verify(accesToken, process.env.TOKEN, (err, user) => {
         if(err){
